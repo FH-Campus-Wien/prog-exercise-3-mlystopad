@@ -96,10 +96,41 @@ public class App {
         return true;
     }
 
-    public static String camelCase() {
+    public static String camelCase(String line) {
+        String finishedLine = "";
+        char[] lineToChars = line.toCharArray();
+        StringBuilder camelCasedChars = new StringBuilder();
+        boolean nextLetterBig = true;
+
+        for (int i = 0; i < lineToChars.length; i++) {
+            if (line.charAt(i) > 64 && line.charAt(i) < 91) {
+                if (nextLetterBig) {
+                    camelCasedChars.append(lineToChars[i]);
+                    nextLetterBig = false;
+                } else {
+                    camelCasedChars.append((char) (lineToChars[i] + 32));
+                }
+            } else if (line.charAt(i) > 96 && line.charAt(i) < 123) {
+                if (nextLetterBig) {
+                    camelCasedChars.append((char) (lineToChars[i] - 32));
+                    nextLetterBig = false;
+                } else {
+                    camelCasedChars.append(lineToChars[i]);
+                }
+            } else {
+                if (lineToChars[i] == 32) {
+                    nextLetterBig = true;
+                }
+            }
+
+        }
 
 
-        return null;
+        finishedLine = camelCasedChars.toString();
+
+
+
+        return finishedLine;
     }
 
     public static int checkDigit(int[] code) {
@@ -120,8 +151,8 @@ public class App {
     }
 
     public static void main(String[] args) {
-        for (int i =0; i < 100; i++) {
-            System.out.println(randomNumberBetweenOneAndHundred());
-        }
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Input: ");
+        System.out.println(camelCase(scanner.nextLine()));
     }
 }
